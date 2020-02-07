@@ -49,3 +49,19 @@ for (int j = 0; j < imageHeight; ++j) {
             pixels[i][j] = 0; 
     } 
 } 
+
+
+/***
+ * Combining reflection, refraction, and etc, by fresnel equation.
+ * This algorithm is recursive!
+ */ 
+
+// compute reflection color
+color reflectionCol = computeReflectionColor(); 
+// compute refraction color
+color refractionCol = computeRefractionColor(); 
+float Kr; // reflection mix value 
+float Kt; // refraction mix value 
+fresnel(refractiveIndex, normalHit, primaryRayDirection, &Kr, &Kt); 
+// mix the two
+color glassBallColorAtHit = Kr * reflectionColor + (1-Kr) * refractionColor; 
