@@ -1,0 +1,43 @@
+Summary of Blog 4 READ
+
+
+Section 1: Representation of surfaces
+
+- Parametric and Implicit
+- Sphere useful as a bounding volume. Intersection testing surfaces.
+    > First compute if interect with the sphere, faster if finding intersection 
+    with Implicit surfaces is faster than a triangle mesh.
+
+- solution with ray-Implicit surface is simpler, faster and used as bounding volumes.
+
+- intersection is easier than other components in differential geometry.
+Different approach in production.
+
+Section 2: Ray Sphere intersection
+
+- Geometrical solution 
+    > Found by tangets and angles between lines.
+- Anylytical solution 
+    > Implicit Functions and Modelling
+    > But found by roots of quadratic equation.
+- Pay attention to normalization of direction vectors during implementation.
+
+- Find the intersection point by the ray parametric equation.
+(Did not understand why the wrong is wrong and good is good in the last image)
+
+Section 3 : Rendering spheres
+
+Heirarchy of Functions
+> Intersect defined inside sphere using prev
+> Trace, gets the nearest point where hit , given a ray
+> Cast ray also calculates the texture information, the checkboard pattern
+
+Section 4: Ray plane intersection
+
+Simple geometry with the normal
+Additional constratins for disk
+
+Section 5 : Ray box interection 
+
+Using geomentry and parametric form , 
+(didn't explain for oblique boxes) but we can just tranform the ray.
