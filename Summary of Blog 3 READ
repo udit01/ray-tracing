@@ -1,0 +1,199 @@
+Summary of Blog 3 READ
+
+
+Section 1: Computer Screen 
+- Analog to digital, all commputed are approximations, etc
+- Examples how figures are shown digitalized, and how we can
+    save mathematical equations to make and svg which is 
+    clear at every resolution
+
+Section 2: Same in 3D
+- Approximation with polygons and mainly triangles because 
+    there is an efficient method to find an intersection of 
+    a line and where it's passing through a triangle, 
+    that line is the ray from ray tracing.
+- Approximate shapes by polygons, make it smoother by 
+    more approximations.
+    (Sampling):Smooth -> Points
+    Tessellation: Smooth surface to triangle mesh
+    Can use traingles smaller than pixels, so conceptually,
+    they are there, but we can't see them!
+- Control points form the input mesh. (Different from mesh 
+    points on the surface)
+    Control points are the points from which the surface
+    can be defined ideally, a perfectly smooth surface.
+-Comparsion between polygon meshes and (nurbs)control surface points
+    >Editing poly is time consuming vs NURBS and subdivsion
+    >Poly meshes need to be formed from the control meshes 
+    first, which is slower
+    >poly used in cry engine, films
+- Rendering is computationally expensive
+- When to find an intersection of line(ray) and a geometrical shape,
+    >Geometric solution,
+    > Algeabraic solution
+- NURBS and subdivsion surfaces explained and formed by varying param
+    while easier to find intersection, diffcult to Render
+- Rendering is more than just rendering 3d surfaces
+- Triangles are the best choice for ray tracing.    
+
+- 3d scene is: Geometry + Camera + light (All this info in scene file)
+    Also information like resolution of final image,etc (global render settings)
+
+-GEOMETRY will convert to traingular meshes before rendering (GPU optimized)
+
+Section 3 : Visibility and Shading
+
+- Goal is to create a 'REAL' image 
+- Foreshortneing effect in the eye. 
+    Achieved by perspective projection on the 'canvas'
+- From wireframe to 3d, tackle the visibility problem
+    solved by : Rasterization or Ray tracing
+now assume the 3d scene can be flattened onto the flat surface
+- Shading: Real life objet has absorption and reflection
+    mathematical model to get up from the atomic level and simulate
+    how the light interacts with the given materail at the 
+    microscopic level.
+- Light Transport : Backward tracing more efficient
+    In rendering, a light transport algorithm is an algorithm designed to simulate the way light travels in space in order to produce an image of a 3D scene that matches "reality" as closely as possible.
+
+- rendering can essentially be seen as essential a two steps process:
+    >The perspective projection and visibility problem on one hand,
+    >And the simulation of light (light transport) as well the simulation of the appearance of objets (shading) on the other.
+- different examples
+
+4 parts : perspective correction, visibility problem,
+        light transport(light sided), and shading(object sided)
+
+Section 4 : perspective
+
+- Do wireframe
+- foreshortning: eye is the center of canvas, ie line of sight passes through middle of image
+
+- perspective divide, have a 'perspecive projection matrix'
+also depends, on how visibility is solved.
+    > for Rasterization, we project geometry by matrix
+    > for ray tracing, we try to se P and we already have projected P'
+    therefore the "PROEJECTION" per se is not needed, only trace the points for every P'
+- Rasterization is faster and used in GPUs and can produe real time rendering, even for screen rotations.
+
+Section 5 : Visibility
+
+- Ray tracing is more computationally expensive, and couldn't be done by older computers, therefore rasterization was popular
+- Ray tracing is better at simulating reflection, soft shadows, realistic shading, real-time effects etc. 
+- GPU's moved from rasterization to ray tracing now. RYES was best and now RIS is best.
+
+- Tackling, introduce coordiante systems, save z lenghts, and P' to normalized to Raster space coordinates.
+    >Based on Depth sorting algorithms ( z buffering algos, painters, newell's etc)
+    > it is necessary to keep track of all the points visible through that particular pixel, sort them out by distance, and use a special compositing technique (we will learn about this in the lesson on the REYES algorithm) to blend them correctly.
+
+- Point to pixel end, then use now pixel on canvas to point.
+
+- Reverse of the prev, now eye to object
+    Done as long as we can calculate the intersection of ray(line) through that geomentrical surface
+    > that's why (compute every geomentry to common) divide in traingles, cause it's solved very througugly and is a good geomentry primitive.
+    > and optimized the most expensive step, ie computation of intersection
+
+- Comparsion between both
+    > RayTr increases linearly with objcs, but rasteriazation does not and is very fast.
+    > Can be improved using acceleration structures. But then memory problems and others 
+    during the same, faster but drawbacks with corner cases.
+    > computation effects for realisism easier and faster in RT 
+
+- Rasterization is fast, but needs cleverness to support complex visual effects. Ray tracing supports complex visual effects, but needs cleverness to be fast" (David Luebke - NVIDIA)
+With rasterization it is easy to do it very fast, but hard to make it look good. With ray tracing it is easy to make it look good, but very hard to make it fast.
+
+Section 6 : Light Simulator
+
+- Reflection 
+    > By the 'reflected rays'
+- Transparency
+    > By the 'tranmitted rays', and light changes direction
+    > Snell's law for the direction and how much light is tranmitted vs reflected, computed by fresenel's equation.
+
+- Glossy , specular reflection 
+    > Rough surface, scattering
+
+- Diffuse Reflection
+    > very rough , extreme. Divided into crystals, bright because scattered everywhere
+
+- Subsurface scattering
+    > Translucence, eg. wax before strong light source, complex to simulate.
+- Indirect diffuse 
+    > Obj should be black but not because, light from another object illuminate it
+- Indirect Specular or Caustics
+    > Surface of a disco ball, by many mirrors
+
+(IMP) Remember from this chapter, that a diffuse surface appears equally bright from all viewing directions, but a specular surface's brightness varies with the viewing direction (if you move around a mirror, the image you see in the mirror will change). We say that diffuse interaction is view-independent while specular interaction is view-dependent.
+----- The above effects all are the object's properties
+
+- Soft shadows 
+    > Material independent, only a geometric problem.
+    > Think umbra and penumbra
+------
+
+Light Transport and shading:
+
+- appearance of object depends on light interaction with matter and how it travels through space
+- Some Effects relate to way object appears 
+> reflection, Transparency, specular reflection, diffuse reflection, Subsurface scattering
+- Some Effects relate to how much light an object revieves.
+> indirect diffuse, indirect specular, soft shadows
+
+light paths and light interaction(shading) with Material, difference very thin, but different approcaches in CS
+
+- Global Illumination,(indirect lightning)
+    > take into account only the direct lightning, or both, indirect too!
+    > Simulating indirect lighting on top of direct lighting requires not twice as many rays (if you compare than number with the number of rays used to simulate direct lighting), but probably of few orders of magnitude more. 
+    > can be computed without ray tracing, required mish-mash of components
+
+>>Ray tracing is easier and slower, but alternatives exist.
+and unified method to solve both visibility problem and lightning
+
+
+Section 7 : Light transport
+
+- L(D|S)*E paths, on number of interactions 
+
+- Spawing rays (eg 32) and limiting them after a fixed number of bounces to prevent the 'curse of ray tracing' and happend in real life too as they loose intensity
+    > 32^3, very quickly increase in number
+
+- Unidirectional path tracing.
+    >number of rays are spawned(extrememly material dependant), only 1 from eye to light source if a reflective surface or 2 for trasparent surface, 1 each for reflection and tramission.
+    when surface is diffuse, many rays eg(16, 32, 64 ...) they are distributed over the hemisphere. oriented about the normal.
+
+- Faliure in case of causitcs, we miss that completely in 10 or 20 rays because of not enough information, that all from sphere are being concenterated.
+    > Monte carlo integration, subsampling of a bit and that (should be) the representative of the whole population
+
+- Photon mapping is an algorithm(PCD of photos), which gives an idea of how lightning info is stored in strucres and getting some idea before final render.
+    > We'll get that prior knowledge that we desire and (then maybe send rays where we think are important, or weighted rays ?)
+    > Algo's exist which can do withouh prior knowledge
+
+Section 8 : Shading
+
+- Computing the object's color and brightness and relation bw them
+    > combination of what is the color(albedo) of objects and how much light does it abosorb or reflect, 
+    > Technial color = ratio of reflected light(not abosorbed) to total light incident [k]
+
+-The amount of light reflected from a point varies with the view direction ωv.
+-The amount of light reflected from a point for a given view direction ωv, depends on the incoming light direction ωi.
+
+- Physically plausible rendering and different models to compute the equation
+give, wi, wo, give the reflected and abosorbed light. (Preferabbly in all direction?)
+
+- Simulating the appearance of an object requires to answer one question only: how much light does an object reflect back to the eye (or any other direction for that matter which is particularly useful when indirect lighting is computed), over the total amount it receives?
+
+Section 9 : Key points 
+
+Summary
+
+Computers deal with discrete structures which is an issue, as the shapes we want to represent in images are continuous.
+The triangle is a good choice of rendering primitive regardless of the method you use to solve the visibility problem (ray tracing or rasterisation).
+Rasterisation is faster than ray tracing to solve the visibility process (and is the method used by GPUs), but it is easier to simulate global illumination effects with ray tracing. Plus, ray tracing can be used to both solve the visibility problem and shading. If you use rasterisation, you need another algorithm or method to compute global illumination (but it is not impossible).
+Ray tracing has its own issues and challenges though. The ray-geometry intersection test is expensive and the render time increases linearly with the amount of geometry in the scene. Acceleration structures can be used to cut the render time down, but a good acceleration structure is hard to find (one that works well for all possible scene configuration). Ray tracing introduces noise in the image, a visual artefact which is hard to get rid of, etc.
+If you decide to use ray tracing to compute shading and simulate global illumination effects, then you will need to simulate the different paths light rays take to get from light sources to the eye. This path depends on the type of surface the ray will interact with on its way to the eye: is the surface diffuse, specular, transparent, etc. There are different ways you can simulate these light paths. Simulating them accurately is important as they make it possible to reproduce lighting effects such a diffuse and specular inter-reflections, caustics, soft shadows, translucency, etc. A good light transport algorithm is one that simulates all possible light paths efficiently.
+While it's possible to simulate the transport of light rays from surface to surface, it's impossible to simulate the interaction of light with matter at the micro- and atomic scale. However the result of these interactions is predictable and consistent. Thus we can attempt at simulating them using mathematical function. A shader implements some mathematical model to approximate the way a given surface reflects light. The way a surface reflects light is really the visual signature of that object. This is how and why we are capable of visually identifying what an object is made of: skin, wood, metal, fabric, plastic, etc. therefore being able to simulate the appearance of any given material is of critical important in the process of generating photo-realistic computer generated images. Again this is the job of shaders.
+There is a fine line between shaders and light transport algorithms. The way in which secondary rays are spawned from surface to compute indirect lighting effects (such as indirect specular and diffuse reflections) depends on the object material type: is the object diffuse, specular, etc. We will learn in the section on light transport, how shaders are used to generate these secondary rays.
+
+> Depth of field (focal length?), motion blur etc. (thankfully no shutter etc)
+> Eng topics  like threading etc GPU vs CPU , how accelerating structures etc
+
