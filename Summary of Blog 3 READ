@@ -1,9 +1,9 @@
-Summary of Blog 3 READ
-
+SCRATCH - PIXEL BLOGS summary notes
+Udit Jain
 
 Section 1: Computer Screen 
-- Analog to digital, all commputed are approximations, etc
-- Examples how figures are shown digitalized, and how we can
+- Analog to digital, all computed are approximations, etc
+- Examples how figures are shown digitized, and how we can
     save mathematical equations to make and svg which is 
     clear at every resolution
 
@@ -16,49 +16,49 @@ Section 2: Same in 3D
     more approximations.
     (Sampling):Smooth -> Points
     Tessellation: Smooth surface to triangle mesh
-    Can use traingles smaller than pixels, so conceptually,
+    Can use triangles smaller than pixels, so conceptually,
     they are there, but we can't see them!
 - Control points form the input mesh. (Different from mesh 
     points on the surface)
     Control points are the points from which the surface
     can be defined ideally, a perfectly smooth surface.
--Comparsion between polygon meshes and (nurbs)control surface points
-    >Editing poly is time consuming vs NURBS and subdivsion
+-Comparison between polygon meshes and (nurbs)control surface points
+    >Editing poly is time consuming vs NURBS and subdivision
     >Poly meshes need to be formed from the control meshes 
     first, which is slower
     >poly used in cry engine, films
 - Rendering is computationally expensive
 - When to find an intersection of line(ray) and a geometrical shape,
     >Geometric solution,
-    > Algeabraic solution
-- NURBS and subdivsion surfaces explained and formed by varying param
-    while easier to find intersection, diffcult to Render
+    > Algebraic solution
+- NURBS and subdivision surfaces explained and formed by varying param
+    while easier to find intersection, difficult to Render
 - Rendering is more than just rendering 3d surfaces
 - Triangles are the best choice for ray tracing.    
 
 - 3d scene is: Geometry + Camera + light (All this info in scene file)
     Also information like resolution of final image,etc (global render settings)
 
--GEOMETRY will convert to traingular meshes before rendering (GPU optimized)
+-GEOMETRY will convert to triangular meshes before rendering (GPU optimized)
 
 Section 3 : Visibility and Shading
 
 - Goal is to create a 'REAL' image 
-- Foreshortneing effect in the eye. 
+- Foreshortening effect in the eye. 
     Achieved by perspective projection on the 'canvas'
 - From wireframe to 3d, tackle the visibility problem
     solved by : Rasterization or Ray tracing
 now assume the 3d scene can be flattened onto the flat surface
-- Shading: Real life objet has absorption and reflection
+- Shading: Real life object has absorption and reflection
     mathematical model to get up from the atomic level and simulate
-    how the light interacts with the given materail at the 
+    how the light interacts with the given material at the 
     microscopic level.
 - Light Transport : Backward tracing more efficient
     In rendering, a light transport algorithm is an algorithm designed to simulate the way light travels in space in order to produce an image of a 3D scene that matches "reality" as closely as possible.
 
 - rendering can essentially be seen as essential a two steps process:
     >The perspective projection and visibility problem on one hand,
-    >And the simulation of light (light transport) as well the simulation of the appearance of objets (shading) on the other.
+    >And the simulation of light (light transport) as well the simulation of the appearance of objects (shading) on the other.
 - different examples
 
 4 parts : perspective correction, visibility problem,
@@ -67,14 +67,14 @@ now assume the 3d scene can be flattened onto the flat surface
 Section 4 : perspective
 
 - Do wireframe
-- foreshortning: eye is the center of canvas, ie line of sight passes through middle of image
+- foreshortening: eye is the center of canvas, ie line of sight passes through middle of image
 
-- perspective divide, have a 'perspecive projection matrix'
+- perspective divide, have a 'perspective projection matrix'
 also depends, on how visibility is solved.
     > for Rasterization, we project geometry by matrix
     > for ray tracing, we try to se P and we already have projected P'
-    therefore the "PROEJECTION" per se is not needed, only trace the points for every P'
-- Rasterization is faster and used in GPUs and can produe real time rendering, even for screen rotations.
+    therefore the "PROJECTION" per se is not needed, only trace the points for every P'
+- Rasterization is faster and used in GPUs and can produce real time rendering, even for screen rotations.
 
 Section 5 : Visibility
 
@@ -82,22 +82,22 @@ Section 5 : Visibility
 - Ray tracing is better at simulating reflection, soft shadows, realistic shading, real-time effects etc. 
 - GPU's moved from rasterization to ray tracing now. RYES was best and now RIS is best.
 
-- Tackling, introduce coordiante systems, save z lenghts, and P' to normalized to Raster space coordinates.
+- Tackling, introduce coordinate systems, save z lengths, and P' to normalized to Raster space coordinates.
     >Based on Depth sorting algorithms ( z buffering algos, painters, newell's etc)
     > it is necessary to keep track of all the points visible through that particular pixel, sort them out by distance, and use a special compositing technique (we will learn about this in the lesson on the REYES algorithm) to blend them correctly.
 
 - Point to pixel end, then use now pixel on canvas to point.
 
 - Reverse of the prev, now eye to object
-    Done as long as we can calculate the intersection of ray(line) through that geomentrical surface
-    > that's why (compute every geomentry to common) divide in traingles, cause it's solved very througugly and is a good geomentry primitive.
+    Done as long as we can calculate the intersection of ray(line) through that geometrical surface
+    > that's why (compute every geometry to common) divide in triangles, cause it's solved very thoroughly and is a good geometry primitive.
     > and optimized the most expensive step, ie computation of intersection
 
-- Comparsion between both
-    > RayTr increases linearly with objcs, but rasteriazation does not and is very fast.
+- Comparison between both
+    > RayTr increases linearly with objects, but rasterization does not and is very fast.
     > Can be improved using acceleration structures. But then memory problems and others 
     during the same, faster but drawbacks with corner cases.
-    > computation effects for realisism easier and faster in RT 
+    > computation effects for realism easier and faster in RT 
 
 - Rasterization is fast, but needs cleverness to support complex visual effects. Ray tracing supports complex visual effects, but needs cleverness to be fast" (David Luebke - NVIDIA)
 With rasterization it is easy to do it very fast, but hard to make it look good. With ray tracing it is easy to make it look good, but very hard to make it fast.
@@ -107,8 +107,8 @@ Section 6 : Light Simulator
 - Reflection 
     > By the 'reflected rays'
 - Transparency
-    > By the 'tranmitted rays', and light changes direction
-    > Snell's law for the direction and how much light is tranmitted vs reflected, computed by fresenel's equation.
+    > By the 'transmitted rays', and light changes direction
+    > Snell's law for the direction and how much light is transmitted vs reflected, computed by fresnel's equation.
 
 - Glossy , specular reflection 
     > Rough surface, scattering
@@ -117,7 +117,7 @@ Section 6 : Light Simulator
     > very rough , extreme. Divided into crystals, bright because scattered everywhere
 
 - Subsurface scattering
-    > Translucence, eg. wax before strong light source, complex to simulate.
+    > Translucence, eg. wax before a strong light source, complex to simulate.
 - Indirect diffuse 
     > Obj should be black but not because, light from another object illuminate it
 - Indirect Specular or Caustics
@@ -136,10 +136,10 @@ Light Transport and shading:
 - appearance of object depends on light interaction with matter and how it travels through space
 - Some Effects relate to way object appears 
 > reflection, Transparency, specular reflection, diffuse reflection, Subsurface scattering
-- Some Effects relate to how much light an object revieves.
+- Some Effects relate to how much light an object receives.
 > indirect diffuse, indirect specular, soft shadows
 
-light paths and light interaction(shading) with Material, difference very thin, but different approcaches in CS
+light paths and light interaction(shading) with Material, difference very thin, but different approaches in CS
 
 - Global Illumination,(indirect lightning)
     > take into account only the direct lightning, or both, indirect too!
@@ -154,31 +154,31 @@ Section 7 : Light transport
 
 - L(D|S)*E paths, on number of interactions 
 
-- Spawing rays (eg 32) and limiting them after a fixed number of bounces to prevent the 'curse of ray tracing' and happend in real life too as they loose intensity
+- Spawning rays (eg 32) and limiting them after a fixed number of bounces to prevent the 'curse of ray tracing' and happen in real life too as they loose intensity
     > 32^3, very quickly increase in number
 
 - Unidirectional path tracing.
-    >number of rays are spawned(extrememly material dependant), only 1 from eye to light source if a reflective surface or 2 for trasparent surface, 1 each for reflection and tramission.
+    >number of rays are spawned(extremely material dependant), only 1 from eye to light source if a reflective surface or 2 for transparent surface, 1 each for reflection and transmission.
     when surface is diffuse, many rays eg(16, 32, 64 ...) they are distributed over the hemisphere. oriented about the normal.
 
-- Faliure in case of causitcs, we miss that completely in 10 or 20 rays because of not enough information, that all from sphere are being concenterated.
+- Failure in case of caustics, we miss that completely in 10 or 20 rays because of not enough information, that all from sphere are being concentrated.
     > Monte carlo integration, subsampling of a bit and that (should be) the representative of the whole population
 
-- Photon mapping is an algorithm(PCD of photos), which gives an idea of how lightning info is stored in strucres and getting some idea before final render.
+- Photon mapping is an algorithm(PCD of photos), which gives an idea of how lightning info is stored in structures and getting some idea before the final render.
     > We'll get that prior knowledge that we desire and (then maybe send rays where we think are important, or weighted rays ?)
-    > Algo's exist which can do withouh prior knowledge
+    > Algo's exist which can do without prior knowledge
 
 Section 8 : Shading
 
 - Computing the object's color and brightness and relation bw them
-    > combination of what is the color(albedo) of objects and how much light does it abosorb or reflect, 
-    > Technial color = ratio of reflected light(not abosorbed) to total light incident [k]
+    > combination of what is the color(albedo) of objects and how much light does it absorb or reflect, 
+    > Technical color = ratio of reflected light(not absorbed) to total light incident [k]
 
 -The amount of light reflected from a point varies with the view direction ωv.
 -The amount of light reflected from a point for a given view direction ωv, depends on the incoming light direction ωi.
 
 - Physically plausible rendering and different models to compute the equation
-give, wi, wo, give the reflected and abosorbed light. (Preferabbly in all direction?)
+give, wi, wo, give the reflected and absorbed light. (Preferably in all directions?)
 
 - Simulating the appearance of an object requires to answer one question only: how much light does an object reflect back to the eye (or any other direction for that matter which is particularly useful when indirect lighting is computed), over the total amount it receives?
 
